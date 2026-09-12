@@ -4,20 +4,25 @@ const authorInput = document.querySelector('#author-input');
 const tip = document.querySelector('#tip');
 const list = document.querySelector('#task-list');
 const filters = document.querySelector('.filters');
+const searchInput = document.querySelector('#search-input');
 
 let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-let currentFilter = 'all'; 
+let currentFilter = 'all';
+let keyword = '';
 const save = () => localStorage.setItem('tasks', JSON.stringify(tasks));
 
 const render = () => {
   list.innerHTML = '';
-  const shown = tasks.filter(t =>
-    currentFilter === 'all' ? true :
-    currentFilter === 'active' ? !t.done : t.done
-  );
+  const shown = tasks.filter(t => {
+    const matchFilter =
+      currentFilter === 'all' ? true :
+      currentFilter === 'active' ? !t.done : t.done;
+    const matchKeyword = (t.title || '').toLowerCase().includes(keyword.toLowerCase());
+    return matchFilter && matchKeyword;
+  });
   if (shown.length === 0) {
     const li = document.createElement('li');
-    li.textContent = '没有符合条件的任务';
+    li.textContent = '没有符合条件的图书';
     list.appendChild(li);
     return;
   }
@@ -57,12 +62,19 @@ form.addEventListener('submit', (e) => {
   tip.textContent = '';
   titleInput.value = '';
   authorInput.value = '';
+  keyword = '';
+  searchInput.value = '';
   render();
 });
 
 filters.addEventListener('click', (e) => {
   if (e.target.tagName !== 'BUTTON') return;
   currentFilter = e.target.dataset.filter;  
+  render();
+});
+
+searchInput.addEventListener('input', () => {
+  keyword = searchInput.value.trim();
   render();
 });
 
