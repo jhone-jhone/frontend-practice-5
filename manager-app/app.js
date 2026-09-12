@@ -1,8 +1,6 @@
 const form = document.querySelector('#add-form');
-const input = document.querySelector('#task-input');
 const titleInput = document.querySelector('#title-input');
 const authorInput = document.querySelector('#author-input');
-const searchInput = document.querySelector('#search-input');
 const tip = document.querySelector('#tip');
 const list = document.querySelector('#task-list');
 const filters = document.querySelector('.filters');
@@ -25,20 +23,10 @@ const render = () => {
   }
   shown.forEach(task => {
     const li = document.createElement('li');
-    li.textContent = task.text;
+    li.textContent = task.author ? `${task.title} — ${task.author}` : task.title;
     if (task.done) li.classList.add('done');
-    const del = document.createElement('span');
-    del.textContent = '删除';
-    del.className =  'del';
-    del.addEventListener('click', (e) => {
-      e.stopPropagation();
-      tasks = tasks.filter(t => t.id !== tssk.id);
-      save();
-      render();
-    })
     li.addEventListener('click', () => {
       task.done = !task.done;    
-      save();
       render();
     });
     list.appendChild(li);
@@ -47,23 +35,17 @@ const render = () => {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const text = input.value.trim();
   const title = titleInput.value.trim();
   const author = authorInput.value.trim();
-  if (text === '') {
-    tip.textContent = '任务名不能为空';
+  if (title === '') {
+    tip.textContent = '书名不能为空';
     return;
   }
-  tasks.push({ text: text, read: false });
-  books.push({
-    title: title,
-    author: author
-  })
+  tasks.push({ title: title, author: author, done: false });
   save();
   tip.textContent = '';
-  titleInput.value='';
-  authorInput.value='';
-  input.value = '';
+  titleInput.value = '';
+  authorInput.value = '';
   render();
 });
 
