@@ -1,5 +1,8 @@
 const form = document.querySelector('#add-form');
 const input = document.querySelector('#task-input');
+const titleInput = document.querySelector('#title-input');
+const authorInput = document.querySelector('#author-input');
+const searchInput = document.querySelector('#search-input');
 const tip = document.querySelector('#tip');
 const list = document.querySelector('#task-list');
 const filters = document.querySelector('.filters');
@@ -24,8 +27,18 @@ const render = () => {
     const li = document.createElement('li');
     li.textContent = task.text;
     if (task.done) li.classList.add('done');
+    const del = document.createElement('span');
+    del.textContent = '删除';
+    del.className =  'del';
+    del.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tasks = tasks.filter(t => t.id !== tssk.id);
+      save();
+      render();
+    })
     li.addEventListener('click', () => {
       task.done = !task.done;    
+      save();
       render();
     });
     list.appendChild(li);
@@ -35,13 +48,21 @@ const render = () => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const text = input.value.trim();
+  const title = titleInput.value.trim();
+  const author = authorInput.value.trim();
   if (text === '') {
     tip.textContent = '任务名不能为空';
     return;
   }
-  tasks.push({ text: text, done: false });
+  tasks.push({ text: text, read: false });
+  books.push({
+    title: title,
+    author: author
+  })
   save();
   tip.textContent = '';
+  titleInput.value='';
+  authorInput.value='';
   input.value = '';
   render();
 });

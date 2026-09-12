@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>图书收藏管理</title>
+        <style>
+            * { box-sizing: border-box; }
+            body { font-family: sans-serif; max-width: 480px; margin: 24px auto; padding: 0 16px; }
+            li.done { text-decoration: line-through; color: #999; }
+            .del { margin-left: 12px; cursor: pointer; }
+            .tip { color: #c00; font-size: 14px; min-height: 20px; }
+            .filters { margin: 12px 0; }
+            .filters button { margin-right: 8px; }
+            ul { padding-left: 0; list-style: none; }
+    </style>
+    </head>
+    <body>
+        <h1>图书管理</h1>
+        <form id="add-form">
+            <input type="text" id="task-input" placeholder="要做什么？">
+            <input type="text" id="title-input" placeholder="书名">
+            <input type="text" id="author-input" placeholder="作者">
+            <button type="submit">添加</button>
+        </form>
+        <div class="filters">
+        <button data-filter="all">全部</button>
+        <button data-filter="reading">已阅读</button>
+        <button data-filter="read">未阅读</button>
+        </div>
+        <p class="tip" id="tip"></p>
+        <input type="text" id="search-input" placeholder="按书名搜索" style="width: 100%; margin-bottom: 8px; ">
+        <ul id="task-list"></ul>
+        <script src="app.js"></script>
+    </body>
+</html>
