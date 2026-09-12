@@ -29,6 +29,17 @@ const render = () => {
       task.done = !task.done;    
       render();
     });
+    const del = document.createElement('span');
+    del.className = 'del';
+    del.textContent = '×';
+    del.title = '删除';
+    del.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tasks = tasks.filter(t => t !== task);
+      save();
+      render();
+    });
+    li.appendChild(del);
     list.appendChild(li);
   });
 };

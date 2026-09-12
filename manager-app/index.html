@@ -8,7 +8,8 @@
             * { box-sizing: border-box; }
             body { font-family: sans-serif; max-width: 480px; margin: 24px auto; padding: 0 16px; }
             li.done { text-decoration: line-through; color: #999; }
-            .del { margin-left: 12px; cursor: pointer; }
+            .del { margin-left: 12px; cursor: pointer; color: #c00; user-select: none; }
+            .del:hover { color: #f00; }
             .tip { color: #c00; font-size: 14px; min-height: 20px; }
             .filters { margin: 12px 0; }
             .filters button { margin-right: 8px; }
@@ -24,8 +25,8 @@
         </form>
         <div class="filters">
         <button data-filter="all">全部</button>
-        <button data-filter="reading">已阅读</button>
-        <button data-filter="read">未阅读</button>
+        <button data-filter="done">已阅读</button>
+        <button data-filter="active">未阅读</button>
         </div>
         <p class="tip" id="tip"></p>
         <input type="text" id="search-input" placeholder="按书名搜索" style="width: 100%; margin-bottom: 8px; ">
